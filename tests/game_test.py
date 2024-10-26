@@ -1,4 +1,8 @@
 import unittest
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from my_game import MyGame
 from game_exception import GameException
 
@@ -19,7 +23,7 @@ class GameTest(unittest.TestCase):
         self.game.define_card("Sauron")
         with self.assertRaises(GameException) as context:
             self.game.define_card("Sauron")
-        self.assertEqual(str(context.exception), "Card 'Sauron' is already defined.")
+        self.assertEqual(str(context.exception), "Error! Card Sauron is already defined.")
     
 if __name__ == "__main__":
     unittest.main()
