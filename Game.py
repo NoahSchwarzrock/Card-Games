@@ -27,7 +27,7 @@ class Game(metaclass=ABCMeta):
     @abstractmethod
     @overload
     def set_rule(self, property_name: str, operation: str) -> None:
-        # raise GameException('')
+        # raise GameException(''#)
         pass
     
     @abstractmethod
