@@ -1,11 +1,15 @@
 from game import Game
+from game_exception import GameException
 
 class MyGame(Game):
     def __init__(self):
-        pass
+        self.cards = {}
     
     def define_card(self, name: str) -> None:
-        pass
+        if name in self.cards:
+            raise GameException(f"Error! {name} is already defined.")
+        else:
+            self.cards[name] = {}
         
     def define_property(self, name: str, type: str) -> None:
         pass
