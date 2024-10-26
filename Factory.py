@@ -13,5 +13,5 @@ class Factory:
     
     @staticmethod
     def load_game(path: str) -> Game:
-        # raise GameException('')
+        # raise GameException(''#)
         return MyGame.load_game(path)
