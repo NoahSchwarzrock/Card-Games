@@ -7,7 +7,7 @@ class MyGame(Game):
     
     def define_card(self, name: str) -> None:
         if name in self.cards:
-            raise GameException(f"Error! {name} is already defined.")
+            raise GameException(f"Card {name} is already defined.")
         else:
             self.cards[name] = {}
         
