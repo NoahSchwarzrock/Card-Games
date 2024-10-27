@@ -85,7 +85,7 @@ class GameTest(unittest.TestCase):
         self.assertIn("power", self.game.properties)
         with self.assertRaises(GameException) as context:
             self.game.set_property("Sauron", "power", 10)
-        self.assertEqual(str(context.exception), "Error ! Card Sauron does not exist.")
+        self.assertEqual(str(context.exception), "Error! Card Sauron does not exist.")
         
     def test_set_card_property_but_property_does_not_exist(self):
         """Tests if an exception is raised when the property does not exist."""
@@ -93,9 +93,9 @@ class GameTest(unittest.TestCase):
         self.assertIn("Sauron", self.game.cards)
         with self.assertRaises(GameException) as context:
             self.game.set_property("Sauron", "type", "Eldrazzi")
-        self.assertEqual(str(context.exception), "Error! Property does not exist.")
+        self.assertEqual(str(context.exception), "Error! Property type does not exist.")
         
-    def test_set_card_property_but_property_does_not_match_value(self):
+    def test_set_card_property_but_value_does_not_match_property(self):
         """Tests if an exception is raised when the value type does not match the property type."""
         self.game.define_card("Sauron")
         self.assertIn("Sauron", self.game.cards)
@@ -103,7 +103,7 @@ class GameTest(unittest.TestCase):
         self.assertIn("power", self.game.properties)
         with self.assertRaises(GameException) as context:
             self.game.set_property("Sauron", "power", "Eldrazzi")
-        self.assertEqual(str(context.exception), "Error! Value does not match property.")
+        self.assertEqual(str(context.exception), "Error! Type of Eldrazzi is string, but the type for power is integer.")
     
 if __name__ == "__main__":
     unittest.main()

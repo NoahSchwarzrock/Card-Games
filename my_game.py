@@ -17,12 +17,20 @@ class MyGame(Game):
         type = str(type).lower()
         if name in self.properties:
             raise GameException(f"Property {name} is already defined.")
-        elif type not in ["integer", "string"]:
+        if type not in ["integer", "string"]:
             raise GameException(f"Property must be of type integer or string not {type}.")
         self.properties[name] = type
     
-    def set_property(self, card_name: str, property_name: str, value: int) -> None:
-        pass
+    def set_property(self, card_name: str, property_name: str, value) -> None:
+        if card_name not in self.cards:
+            raise GameException(f"Card {card_name} does not exist.")
+        if property_name not in self.properties:
+            raise GameException(f"Property {property_name} does not exist.")
+        expected_type = self.properties[property_name]
+        actual_type = "integer" if isinstance(value, int) else "string" if isinstance(value, str) else type(value).__dict__
+        if expected_type != actual_type:
+            raise GameException(f"Type of {value} is {actual_type}, but the type for {property_name} is {expected_type}.")
+        self.cards[card_name][property_name] = value
     
     def set_rule(self, property_name: str, operation: str) -> None:
         pass
