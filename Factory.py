@@ -2,7 +2,7 @@ from typing import final
 
 from game_exception import GameException
 from my_game import MyGame
-from game import Game
+from Game import Game
 
 @final
 class Factory:

@@ -1,4 +1,4 @@
-from game import Game
+from Game import Game
 from game_exception import GameException
 
 class MyGame(Game):
