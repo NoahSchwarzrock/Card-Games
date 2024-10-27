@@ -57,7 +57,53 @@ class GameTest(unittest.TestCase):
             self.game.define_property("type", "float")
         self.assertEqual(str(context.exception), "Error! Property must be of type integer or string not float.")
         
+    def test_set_card_property_success_1(self):
+        """Tests if a property is correctly assigned to a card"""
+        self.game.define_card("Sauron")
+        self.assertIn("Sauron", self.game.cards)
+        self.game.define_property("power", "integer")
+        self.assertIn("power", self.game.properties)
+        self.game.set_property("Sauron", "power", 10)
+        self.assertEqual(self.game.cards["Sauron"], {"power": 10})
         
+    def test_set_card_property_success_2(self):
+        """Tests if a property is correctly assigned to a card"""
+        self.game.define_card("Sauron")
+        self.assertIn("Sauron", self.game.cards)
+        self.game.define_property("power", "integer")
+        self.assertIn("power", self.game.properties)
+        self.game.define_property("type", "string")
+        self.assertIn("type", self.game.properties)
+        self.game.set_property("Sauron", "power", 10)
+        self.game.set_property("Sauron", "type", "Eldrazzi")
+        self.assertEqual(self.game.cards["Sauron"], {"power": 10,
+                                                     "type": "Eldrazzi"})
         
+    def test_set_card_property_but_card_does_not_exist(self):
+        """Tests if an exception is raised when the card does not exist."""
+        self.game.define_property("power", "integer")
+        self.assertIn("power", self.game.properties)
+        with self.assertRaises(GameException) as context:
+            self.game.set_property("Sauron", "power", 10)
+        self.assertEqual(str(context.exception), "Error ! Card Sauron does not exist.")
+        
+    def test_set_card_property_but_property_does_not_exist(self):
+        """Tests if an exception is raised when the property does not exist."""
+        self.game.define_card("Sauron")
+        self.assertIn("Sauron", self.game.cards)
+        with self.assertRaises(GameException) as context:
+            self.game.set_property("Sauron", "type", "Eldrazzi")
+        self.assertEqual(str(context.exception), "Error! Property does not exist.")
+        
+    def test_set_card_property_but_property_does_not_match_value(self):
+        """Tests if an exception is raised when the value type does not match the property type."""
+        self.game.define_card("Sauron")
+        self.assertIn("Sauron", self.game.cards)
+        self.game.define_property("power", "integer")
+        self.assertIn("power", self.game.properties)
+        with self.assertRaises(GameException) as context:
+            self.game.set_property("Sauron", "power", "Eldrazzi")
+        self.assertEqual(str(context.exception), "Error! Value does not match property.")
+    
 if __name__ == "__main__":
     unittest.main()
