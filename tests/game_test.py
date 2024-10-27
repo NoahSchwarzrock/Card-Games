@@ -27,16 +27,35 @@ class GameTest(unittest.TestCase):
         
     def test_define_card_property_success_1(self):
         """Tests if a property is created correctly."""
-        self.game.define_property("power", int)
+        self.game.define_property("power", "integer")
         self.assertIn("power", self.game.properties)
-        self.assertEqual(self.game.properties["power"], {"type": int})
+        self.assertEqual(self.game.properties["power"], {"type": "integer"})
+    
+    def test_define_card_property_success_2(self):
+        """Tests if a property is created correctly."""
+        self.game.define_property("type", "string")
+        self.assertIn("type", self.game.properties)
+        self.assertEqual(self.game.properties["type"], {"type": "string"})
         
     def test_define_card_property_duplicate_1(self):
         """Tests if a property with the same name already exists and raises an exception."""
-        self.game.define_property("power", int)
+        self.game.define_property("power", "integer")
         with self.assertRaises(GameException) as context:
-            self.game.define_property("power", int)
+            self.game.define_property("power", "integer")
         self.assertEqual(str(context.exception), "Error! Property power is already defined.")
+
+    def test_define_card_property_duplicate_2(self):
+        """Tests if a property with the same name already exists and raises an exception."""
+        self.game.define_property("type", "string")
+        with self.assertRaises(GameException) as context:
+            self.game.define_property("type", "string")
+        self.assertEqual(str(context.exception), "Error! Property type is already defined.")
+        
+    def test_define_card_property_wrong_type_1(self):
+        """Tests if a property raises an exception when a property is defined with a wrong type."""
+        with self.assertRaises(GameException) as context:
+            self.game.define_property("type", "float")
+        self.assertEqual(str(context.exception), "Error! Property must be of type integer or string not float.")
         
         
         
