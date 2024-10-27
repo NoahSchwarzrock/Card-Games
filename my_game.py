@@ -4,6 +4,7 @@ from game_exception import GameException
 class MyGame(Game):
     def __init__(self):
         self.cards = {}
+        self.properties = {}
     
     def define_card(self, name: str) -> None:
         if name in self.cards:
@@ -12,7 +13,13 @@ class MyGame(Game):
             self.cards[name] = {}
         
     def define_property(self, name: str, type: str) -> None:
-        pass
+        name = str(name).lower()
+        type = str(type).lower()
+        if name in self.properties:
+            raise GameException(f"Property {name} is already defined.")
+        elif type not in ["integer", "string"]:
+            raise GameException(f"Property must be of type integer or string not {type}.")
+        self.properties[name] = type
     
     def set_property(self, card_name: str, property_name: str, value: int) -> None:
         pass

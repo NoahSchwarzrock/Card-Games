@@ -29,13 +29,13 @@ class GameTest(unittest.TestCase):
         """Tests if a property is created correctly."""
         self.game.define_property("power", "integer")
         self.assertIn("power", self.game.properties)
-        self.assertEqual(self.game.properties["power"], {"type": "integer"})
+        self.assertEqual(self.game.properties["power"], "integer")
     
     def test_define_card_property_success_2(self):
         """Tests if a property is created correctly."""
         self.game.define_property("type", "string")
         self.assertIn("type", self.game.properties)
-        self.assertEqual(self.game.properties["type"], {"type": "string"})
+        self.assertEqual(self.game.properties["type"], "string")
         
     def test_define_card_property_duplicate_1(self):
         """Tests if a property with the same name already exists and raises an exception."""
