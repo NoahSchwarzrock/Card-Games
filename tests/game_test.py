@@ -36,7 +36,7 @@ class GameTest(unittest.TestCase):
         self.game.define_property("power", int)
         with self.assertRaises(GameException) as context:
             self.game.define_property("power", int)
-        self.assertEqual(str(context.exception), "Error! property power is already defined.")
+        self.assertEqual(str(context.exception), "Error! Property power is already defined.")
         
         
         
