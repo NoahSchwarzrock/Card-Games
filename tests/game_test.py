@@ -105,5 +105,54 @@ class GameTest(unittest.TestCase):
             self.game.set_property("Sauron", "power", "Eldrazzi")
         self.assertEqual(str(context.exception), "Error! Type of Eldrazzi is string, but the type for power is integer.")
     
+    def test_set_integer_rule_success_1(self):
+        self.game.define_property("power", "integer")
+        self.assertIn(self.game.properties)
+        self.game.set_rule("power", ">")
+        self.assertIn("power", self.game.rules)
+        self.assertEqual(self.game.rules["power"], {"power": ">"})
+        
+    def test_set_string_rule_success_1(self):
+        self.game.properties("type", "string")
+        self.assertIn("type", self.game.properties)
+        self.game.set_rule("type", "Eldrazi", "Human")
+        self.assertIn("type", self.game.rules)
+        self.assertEqual(self.game.rules["type"], {"Eldrazi": "Human"})
+        
+    def test_set_integer_rule_duplicate(self):
+        self.game.define_property("power", "integer")
+        self.assertIn(self.game.properties)
+        self.game.set_rule("power", ">")
+        self.assertIn("power", self.game.rules)
+        with self.assertRaises(GameException) as context:
+            self.game.set_rule("power", ">")
+        self.assertEqual(str(context.exception), "Error! The rule with property name power is already defined.")
+        
+    def test_set_string_rule_duplicate(self):
+        self.game.define_property("type", "string")
+        self.assertIn("type", self.game.properties)
+        self.game.set_rule("type", "Eldrazi", "Human")
+        self.assertIn("type", self.game.rules)
+        with self.assertRaises(GameException) as context:
+            self.game.set_rule("type", "Eldrazi", "Human")
+        self.assertEqual(str(context.exception), "Error! The rule with property name type, winning name Eldrazi and losing name Human is already defined.")
+        
+    def test_set_integer_rule_but_property_is_not_defined(self):
+        with self.assertRaises(GameException) as context:
+            self.game.set_rule("power", ">")
+        self.assertEqual(str(context.exception), "Error! The property power is not defined.")
+        
+    def test_set_integer_rule_but_operation_does_not_fit(self):
+        with self.assertRaises(GameException) as context:
+            self.game.set_rule("power", "=")
+        self.assertEqual(str(context.exception), "Error! The property power is an integer and requires a comparison operation (<, >).")
+        
+    def set_string_rule_with_same_winning_and_loosing_name(self):
+        self.game.define_property("type", "string")
+        self.assertIn("type", self.game.properties)
+        with self.assertRaises(GameException) as context:
+            self.game.set_rule("type", "Eldrazzi", "Eldrazzi")
+        self.assertEqual(str(context.exception), "Error! The rule with property type cant have the same winning and losing name.")
+    
 if __name__ == "__main__":
     unittest.main()
