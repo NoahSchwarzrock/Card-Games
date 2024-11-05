@@ -20,7 +20,7 @@ class Game(metaclass=ABCMeta):
         pass
     
     @abstractmethod
-    def set_property(self, card_name: str, property_name: str, value: int) -> None:
+    def set_property(self, card_name: str, property_name: str, value: str) -> None:
         # raise GameException('')
         pass
     
