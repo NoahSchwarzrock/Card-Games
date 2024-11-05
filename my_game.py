@@ -1,5 +1,6 @@
 from Game import Game
 from game_exception import GameException
+from typing import Union
 
 class MyGame(Game):
     def __init__(self):
@@ -21,7 +22,7 @@ class MyGame(Game):
             raise GameException(f"Property must be of type integer or string not {type}.")
         self.properties[name] = type
     
-    def set_property(self, card_name: str, property_name: str, value) -> None:
+    def set_property(self, card_name: str, property_name: str, value: Union[str, int]) -> None:
         if card_name not in self.cards:
             raise GameException(f"Card {card_name} does not exist.")
         if property_name not in self.properties:
