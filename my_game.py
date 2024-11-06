@@ -98,6 +98,14 @@ class MyGame(Game):
                 return [card for card in self.cards.keys()]
             else:
                 return [card for card in self.cards.keys() if name == card]
+        elif type == "property":
+            if name == "*":
+                return [f"{key}:{value}" for key, value in self.properties.items()]
+            else:
+                return [f"{key}:{value}" for key, value in self.properties.items() if name == key]
+        elif type == "rule":
+            if name == "*":
+                pass
 
     def save_to_file(self, path: str) -> None:
         pass
