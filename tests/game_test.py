@@ -247,6 +247,11 @@ class GameTest(unittest.TestCase):
             str(context.exception),
             "Error! You can only search for card, type or rule in this method!",
         )
+    
+    def search_for_wrong_type_in_get_function_2(self):
+        with self.assertRaises(GameException) as context:
+            self.game.get("card", 3)
+        self.assertEqual(str(context.exception), "Error! Name has to be a string!")
 
 
 if __name__ == "__main__":
