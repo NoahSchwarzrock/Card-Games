@@ -87,7 +87,25 @@ class MyGame(Game):
             )
 
     def get(self, type: str, name: str) -> list[str]:
-        pass
+        if type not in ["card", "property", "rule"]:
+            raise GameException(
+                "You can only search for card, type or rule in this method!"
+            )
+        if not isinstance(name, str):
+            raise GameException("Name has to be a string!")
+        if type == "card":
+            if name == "*":
+                return [card for card in self.cards.keys()]
+            else:
+                return [card for card in self.cards.keys() if name == card]
+        elif type == "property":
+            if name == "*":
+                return [f"{key}:{value}" for key, value in self.properties.items()]
+            else:
+                return [f"{key}:{value}" for key, value in self.properties.items() if name == key]
+        elif type == "rule":
+            if name == "*":
+                pass
 
     def save_to_file(self, path: str) -> None:
         pass
