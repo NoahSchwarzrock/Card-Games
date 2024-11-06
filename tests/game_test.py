@@ -175,7 +175,7 @@ class GameTest(unittest.TestCase):
             "Error! The property power is an integer and requires a comparison operation (<, >).",
         )
 
-    def set_string_rule_with_same_winning_and_loosing_name(self):
+    def test_set_string_rule_with_same_winning_and_loosing_name(self):
         self.game.define_property("type", "string")
         self.assertIn("type", self.game.properties)
         with self.assertRaises(GameException) as context:
@@ -185,27 +185,27 @@ class GameTest(unittest.TestCase):
             "Error! The rule with property type cant have the same winning and losing name.",
         )
 
-    def get_card_success_1(self):
+    def test_get_card_success_1(self):
         self.game.define_card("Sauron")
         self.assertIn("Sauron", self.game.cards)
         self.assertEqual(self.game.get("card", "Sauron"), ["Sauron"])
 
-    def get_card_success_2(self):
+    def test_get_card_success_2(self):
         self.game.define_card("Sauron")
         self.assertIn("Sauron", self.game.cards)
         self.game.define_card("Emrakul")
         self.assertIn("Emrakul", self.game.cards)
         self.assertEqual(self.game.get("card", "*"), ["Sauron", "Emrakul"])
 
-    def get_card_thats_not_defined_1(self):
+    def test_get_card_thats_not_defined_1(self):
         self.assertEqual(self.game.get("card", "Sauron"), [])
 
-    def get_property_success_1(self):
+    def test_get_property_success_1(self):
         self.game.define_property("power", "integer")
         self.assertIn("power", self.game.properties)
         self.assertEqual(self.game.get("property", "power"), ["power:integer"])
 
-    def get_property_success_2(self):
+    def test_get_property_success_2(self):
         self.game.define_property("power", "integer")
         self.assertIn("power", self.game.properties)
         self.game.define_property("type", "string")
@@ -214,17 +214,17 @@ class GameTest(unittest.TestCase):
             self.game.get("property", "*"), ["power:integer", "type:string"]
         )
 
-    def get_property_thats_not_defined_1(self):
+    def test_get_property_thats_not_defined_1(self):
         self.assertEqual(self.game.get("property", "power"), [])
 
-    def get_rule_success_1(self):
+    def test_get_rule_success_1(self):
         self.game.define_property("power", "integer")
         self.assertIn("power", self.game.properties)
         self.game.set_rule(property_name="power", operation=">")
         self.assertIn("power", self.game.rules)
         self.assertEqual(self.game.get("rule", "power"), ["power>"])
 
-    def get_rule_success_2(self):
+    def test_get_rule_success_2(self):
         self.game.define_property("power", "integer")
         self.assertIn("power", self.game.properties)
         self.game.define_property("type", "string")
@@ -237,18 +237,18 @@ class GameTest(unittest.TestCase):
         self.assertIn("type", self.game.rules)
         self.assertEqual(self.game.get("rule", "*")["power>", "type:Human>Eldrazi"])
 
-    def get_rule_thats_not_defined_1(self):
+    def test_get_rule_thats_not_defined_1(self):
         self.assertEqual(self.game.get("rule", "power"), [])
 
-    def search_for_wrong_type_in_get_function_1(self):
+    def test_search_for_wrong_type_in_get_function_1(self):
         with self.assertRaises(GameException) as context:
             self.game.get("person", "Sauron")
         self.assertEqual(
             str(context.exception),
             "Error! You can only search for card, type or rule in this method!",
         )
-    
-    def search_for_wrong_type_in_get_function_2(self):
+
+    def test_search_for_wrong_type_in_get_function_2(self):
         with self.assertRaises(GameException) as context:
             self.game.get("card", 3)
         self.assertEqual(str(context.exception), "Error! Name has to be a string!")
