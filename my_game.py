@@ -88,8 +88,12 @@ class MyGame(Game):
 
     def get(self, type: str, name: str) -> list[str]:
         if type not in ["card", "property", "rule"]:
-            raise GameException("You can only search for card, type or rule in this method!")
-        if type == "card" and isinstance(name, str):
+            raise GameException(
+                "You can only search for card, type or rule in this method!"
+            )
+        if not isinstance(name, str):
+            raise GameException("Name has to be a string!")
+        if type == "card":
             if name == "*":
                 return [card for card in self.cards.keys()]
             else:
