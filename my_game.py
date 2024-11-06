@@ -87,7 +87,10 @@ class MyGame(Game):
             )
 
     def get(self, type: str, name: str) -> list[str]:
-        pass
+        if type not in ["card", "property", "rule"]:
+            raise GameException("You can only search for card, type or rule in this method!")
+        if type == "card":
+            pass
 
     def save_to_file(self, path: str) -> None:
         pass
