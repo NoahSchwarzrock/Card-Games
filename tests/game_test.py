@@ -178,11 +178,13 @@ class GameTest(unittest.TestCase):
     def test_set_string_rule_with_same_winning_and_loosing_name(self):
         self.game.define_property("type", "string")
         self.assertIn("type", self.game.properties)
+        self.game.set_rule("type", winning_name="Eldrazzi", losing_name="Eldrazzi")
+        self.assertIn("type", self.game.rules)
         with self.assertRaises(GameException) as context:
             self.game.set_rule("type", winning_name="Eldrazzi", losing_name="Eldrazzi")
         self.assertEqual(
             str(context.exception),
-            "Error! The rule with property type cant have the same winning and losing name.",
+            "Error! The rule with property name type, winning name Eldrazzi and losing name Eldrazzi is already defined.",
         )
 
     def test_get_card_success_1(self):
@@ -235,7 +237,7 @@ class GameTest(unittest.TestCase):
             property_name="type", winning_name="Human", losing_name="Eldrazi"
         )
         self.assertIn("type", self.game.rules)
-        self.assertEqual(self.game.get("rule", "*")["power>", "type:Human>Eldrazi"])
+        self.assertEqual(self.game.get("rule", "*"), ["power>", "type:Human>Eldrazi"])
 
     def test_get_rule_thats_not_defined_1(self):
         self.assertEqual(self.game.get("rule", "power"), [])
